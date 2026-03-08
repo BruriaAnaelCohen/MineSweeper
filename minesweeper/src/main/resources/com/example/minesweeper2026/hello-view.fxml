@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.minesweeper2026.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20.0">
+            <Button text="Generate Array" onAction="#onPrintArrayClick"/>
+            <Label fx:id="arrayText"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="BOTTOM_LEFT">
+            <Button text="Quit" onAction="#onQuitButtonClick"/>
+        </HBox>
+    </bottom>
+    <GridPane fx:id="boardGrid" alignment="CENTER" gridLinesVisible="true">
+    </GridPane>
+</BorderPane>
