@@ -174,5 +174,49 @@ public class GameService {
 
     public void handleFlag(int i, int j) {}
 
-    public void handleReveal(int i, int j){}
+    public void unhideCube(int i, int j) {
+        cubesMat[i][j].unhide();
+    }
+
+    public boolean handleReveal(int i, int j) {
+        Cube cube = cubesMat[i][j];
+        cube.unhide();
+
+        return cube.getCubeType() != cubeType.MINE;
+    }
+
+    public cubeType getCellCubeType(int i, int j) {
+        return cubesMat[i][j].getCubeType();
+    }
+
+    public boolean isHidden(int i, int j) {
+        return cubesMat[i][j].getIsHidden();
+    }
+
+    public String getCellVal(int i, int j) {
+        Cube cube = cubesMat[i][j];
+        cubeType type = cube.getCubeType();
+        String str = "";
+
+        switch(type) {
+            case MINE: {
+                str = "💣︎";
+                break;
+            }
+            case NUMBER: {
+                str = Integer.toString(cube.getVal());
+                break;
+            }
+        }
+
+        return str;
+    }
+
+    public boolean checkFlagValidatyIsMine(int i, int j) {
+        return cubesMat[i][j].getCubeType() == cubeType.MINE;
+    }
+
+    private void gameOver() {
+        // TO-DO
+    }
 }

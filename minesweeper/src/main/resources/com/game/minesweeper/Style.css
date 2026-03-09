@@ -1,0 +1,18 @@
+.root {
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-font-size: 16px;
+    -fx-min-width: 42px;
+    -fx-min-height: 42px;
+    -fx-background-color: #a8a8a8;
+    -fx-border-color: black ;
+}
+
+.button:disabled {
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: black;
+    -fx-border-color: #7a7a7a;
+    -fx-opacity: 1;
+}

@@ -31,4 +31,8 @@ public class Cube {
     public cubeType getCubeType(){
         return this.type;
     }
+
+    public void unhide() {
+        this.isHidden = false;
+    }
 }

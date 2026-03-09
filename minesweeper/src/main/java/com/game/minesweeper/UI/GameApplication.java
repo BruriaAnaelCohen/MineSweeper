@@ -19,6 +19,7 @@ public class GameApplication extends Application {
         );
 
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+        scene.getStylesheets().add(String.valueOf(getClass().getResource("/com/game/minesweeper/Style.css")));
         stage.setTitle("MineSweeper");
         stage.setScene(scene);
         stage.show();
