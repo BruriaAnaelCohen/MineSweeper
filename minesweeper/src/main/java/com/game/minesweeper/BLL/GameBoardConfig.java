@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class GameBoardConfig {
     private int size = 9;
     private int mines = 10;
-    private HashSet<Integer> mines_pos = new HashSet<>();;
+    private HashSet<Integer> mines_pos = new HashSet<>();
 
     public GameBoardConfig(int size, int mines) {
         this.size = size;
