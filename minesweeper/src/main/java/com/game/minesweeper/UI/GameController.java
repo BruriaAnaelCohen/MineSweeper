@@ -86,13 +86,12 @@ public class GameController {
             for(int j = 0; j < board_size; ++j) {
                 boardButtons[i][j].setText("");
                 boardButtons[i][j].setDisable(false);
+                boardButtons[i][j].setStyle("-fx-border-color: black;");
             }
         }
     }
 
     private void unhideBlankNeighbor(int i, int j) {
-        // TO- DO recursive
-
         ++revealedCards;
 
         boardButtons[i][j].setDisable(true);
@@ -175,6 +174,7 @@ public class GameController {
         boolean isValidMove = gameService.handleReveal(i, j);
 
         if(!isValidMove) {
+            boardButtons[i][j].setStyle("-fx-border-color: red;");
             gameOver();
         }
     }
