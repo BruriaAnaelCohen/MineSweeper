@@ -1,4 +1,4 @@
-package com.example.minesweeper;
+package com.game.minesweeper;
 
 enum cubeType {
     MINE,

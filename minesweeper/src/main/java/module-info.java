@@ -6,6 +6,6 @@ module com.example.minesweeper {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
 
-    opens com.example.minesweeper to javafx.fxml;
-    exports com.example.minesweeper;
+    opens com.game.minesweeper to javafx.fxml;
+    exports com.game.minesweeper;
 }
