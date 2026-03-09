@@ -1,5 +1,6 @@
 package com.game.minesweeper;
 
+import com.game.minesweeper.UI.GameApplication;
 import javafx.application.Application;
 
 public class Launcher {

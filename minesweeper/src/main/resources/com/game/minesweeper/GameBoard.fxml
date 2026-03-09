@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.game.minesweeper.GameController">
+            fx:controller="com.game.minesweeper.UI.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
@@ -17,7 +17,7 @@
     <center>
         <VBox alignment="CENTER" spacing="20.0">
             <Button text="Restart Game" onAction="#resetGame"/>
-            <Label fx:id="arrayText"/>
+            <Label fx:id="text_for_dev"/>
             <GridPane fx:id="boardGrid"
                       alignment="CENTER"
                       gridLinesVisible="true"/>
@@ -29,7 +29,7 @@
             <padding>
                 <Insets top="10.0"/>
             </padding>
-            <Button text="Quit" onAction="#onQuitButtonClick"/>
+            <Button text="Quit" onAction="#quit"/>
         </HBox>
     </bottom>
 

@@ -1,10 +1,4 @@
-package com.game.minesweeper;
-
-enum cubeType {
-    MINE,
-    BLANK,
-    NUMBER
-}
+package com.game.minesweeper.DAL;
 
 public class Cube {
     private boolean isHidden = true;
