@@ -9,23 +9,28 @@
 <?import javafx.scene.layout.GridPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.minesweeper2026.HelloController">
+            fx:controller="com.example.minesweeper.GameController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
     <center>
         <VBox alignment="CENTER" spacing="20.0">
-            <Button text="Generate Array" onAction="#onPrintArrayClick"/>
+            <Button text="Restart Game" onAction="#resetGame"/>
             <Label fx:id="arrayText"/>
+            <GridPane fx:id="boardGrid"
+                      alignment="CENTER"
+                      gridLinesVisible="true"/>
         </VBox>
     </center>
 
     <bottom>
         <HBox alignment="BOTTOM_LEFT">
+            <padding>
+                <Insets top="10.0"/>
+            </padding>
             <Button text="Quit" onAction="#onQuitButtonClick"/>
         </HBox>
     </bottom>
-    <GridPane fx:id="boardGrid" alignment="CENTER" gridLinesVisible="true">
-    </GridPane>
+
 </BorderPane>
