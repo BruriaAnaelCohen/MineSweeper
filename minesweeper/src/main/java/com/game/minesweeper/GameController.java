@@ -20,7 +20,7 @@ public class GameController {
 
     private Cube [][] cubesBoard;
 
-    private HashSet<Integer> mine_pos = new HashSet<Integer>(); // set of mines positions
+    private final HashSet<Integer> mine_pos = new HashSet<>(); // set of mines positions
 
     private final int board_size = 9;
     private final int mine_cnt = 10;
@@ -44,10 +44,9 @@ public class GameController {
         clearGridView();
     }
 
-    private void startGame() { // on user first click
-        generateMinesPos();
+    private void startGame(int i, int j) { // on user first click
+        generateMinesPos(i, j);
         setGridMines();
-        setGridMines_actual();
         setCubesBoardVals();
         printCubesBoard();
     }
@@ -78,7 +77,7 @@ public class GameController {
     private void handleCellClick(MouseEvent event, int i, int j){
         if (!hasStarted) {
            hasStarted = true;
-            startGame();
+            startGame(i, j);
         }
 
         if (event.getButton() == MouseButton.PRIMARY) {
@@ -91,24 +90,27 @@ public class GameController {
     }
 
 
-    private void generateMinesPos() {
+    private void generateMinesPos(int i, int j) {
         mine_pos.clear();
+        int user_pos = i * board_size + j;
 
-//        while(mine_pos.size() < mine_cnt) {
-//            int pos = (int) (Math.random() * (Math.pow(board_size, 2) - 1)); // 0 <= x <=80
-//            mine_pos.add(pos);
-//        }
-
-        mine_pos.add(2);
-        mine_pos.add(8);
-        mine_pos.add(9);
-        mine_pos.add(15);
-        mine_pos.add(20);
-        mine_pos.add(25);
-        mine_pos.add(31);
-        mine_pos.add(35);
-        mine_pos.add(42);
-        mine_pos.add(53);
+        while(mine_pos.size() < mine_cnt) {
+            int pos = (int) (Math.random() * (Math.pow(board_size, 2) - 1)); // 0 <= x <=80
+            if (pos != user_pos){
+                mine_pos.add(pos);
+            }
+        }
+//
+//        mine_pos.add(2);
+//        mine_pos.add(8);
+//        mine_pos.add(9);
+//        mine_pos.add(15);
+//        mine_pos.add(20);
+//        mine_pos.add(25);
+//        mine_pos.add(31);
+//        mine_pos.add(35);
+//        mine_pos.add(42);
+//        mine_pos.add(53);
 
         arrayText.setText(mine_pos.toString());
     }
@@ -121,18 +123,11 @@ public class GameController {
         });
     }
 
-    private void setGridMines_actual() {
-        mine_pos.forEach(pos -> {
-            int row = pos / board_size;
-            int col = pos % board_size;
-            cubesBoard[row][col].setMine();
-        });
-    }
-
     private void setGridMines() {
         mine_pos.forEach(pos -> {
             int row = pos / board_size;
             int col = pos % board_size;
+            cubesBoard[row][col].setMine();
             cells[row][col].setText("*");
         });
     }
@@ -140,8 +135,11 @@ public class GameController {
     private void setCubesBoardVals() {
         for(int i = 0; i < board_size; ++i) {
             for(int j = 0; j < board_size; ++j) {
-                int val = setCubeValue(i, j);
-                cubesBoard[i][j].setCubeNumber(val);
+
+                if(cubesBoard[i][j].getCubeType() != cubeType.MINE) {
+                    int val = setCubeValue(i, j);
+                    cubesBoard[i][j].setCubeNumber(val);
+                }
             }
         }
     }
@@ -168,45 +166,62 @@ public class GameController {
         }
     }
 
-    private int setCubeValue(int i, int j) { // check surounding mines
+    private int setCubeValue(int i, int j) { // check surrounding mines
         int counter = 0;
+        cubeType t;
 
-        if(i >= 1) {
+        if(i >= 1) { // empty row on top
+            t = cubesBoard[i - 1][j].getCubeType();
+            if(t == cubeType.MINE) { // top
+                ++counter;
+            }
+
             if (j >= 1) {
-                if(cubesBoard[i - 1][j - 1].getCubeType() == cubeType.MINE) { // top left
-                    ++counter;
-                }
-                if(cubesBoard[i - 1][j].getCubeType() == cubeType.MINE) { // top
-                    ++counter;
-                }
-                if(cubesBoard[i][j - 1].getCubeType() == cubeType.MINE) { // left
+                t = cubesBoard[i - 1][j - 1].getCubeType();
+                if(t == cubeType.MINE) { // top left
                     ++counter;
                 }
             }
 
             if(j < board_size - 1 ) {
-                if(cubesBoard[i - 1][j + 1].getCubeType() == cubeType.MINE) { // top right
+                t = cubesBoard[i - 1][j + 1].getCubeType();
+                if(t == cubeType.MINE) { // top right
                     ++counter;
                 }
-                if(cubesBoard[i][j + 1].getCubeType() == cubeType.MINE) { // right
-                    ++counter;
-                }
+
             }
         }
 
-        if(i < board_size - 1) {
+        if(j >= 1) {
+            t = cubesBoard[i][j - 1].getCubeType();
+            if(t == cubeType.MINE) { // left
+                ++counter;
+            }
+        }
+
+        if(j < board_size - 1) {
+            t = cubesBoard[i][j + 1].getCubeType();
+            if(t == cubeType.MINE) { // right
+                ++counter;
+            }
+        }
+
+        if(i < board_size - 1) { // empty row on bottom
+            t = cubesBoard[i + 1][j].getCubeType();
+            if(t == cubeType.MINE) { // bottom
+                ++counter;
+            }
+
             if(j >= 1) {
-                if(cubesBoard[i + 1][j - 1].getCubeType() == cubeType.MINE) { // bottom left
+                t = cubesBoard[i + 1][j - 1].getCubeType();
+                if(t == cubeType.MINE) { // bottom left
                     ++counter;
                 }
             }
 
-            if(cubesBoard[i + 1][j].getCubeType() == cubeType.MINE) { // bottom
-                ++counter;
-            }
-
             if(j < board_size - 1) {
-                if(cubesBoard[i + 1][j + 1].getCubeType() == cubeType.MINE) { // bottom right
+                t = cubesBoard[i + 1][j + 1].getCubeType();
+                if(t == cubeType.MINE) { // bottom right
                     ++counter;
                 }
             }
