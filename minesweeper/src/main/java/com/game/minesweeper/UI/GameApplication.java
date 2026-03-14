@@ -1,0 +1,27 @@
+package com.game.minesweeper.UI;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.Objects;
+
+public class GameApplication extends Application {
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                Objects.requireNonNull(
+                        GameApplication.class.getResource("/com/game/minesweeper/GameBoard.fxml")
+                )
+        );
+
+        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+        scene.getStylesheets().add(String.valueOf(getClass().getResource("/com/game/minesweeper/Style.css")));
+        stage.setTitle("MineSweeper");
+        stage.setScene(scene);
+        stage.show();
+    }
+}
