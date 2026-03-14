@@ -65,10 +65,12 @@ public class GameController {
             for (int col = 0; col < board_size; ++col) {
                 int i = row;
                 int j = col;
-                boardButtons[row][col].setOnMouseClicked(event -> handleClick(event, i, j, boardButtons[i][j].getText()));
+                boardButtons[row][col].setOnMouseClicked(
+                        event -> handleClick(event, i, j, boardButtons[i][j].getText()));
             }
         }
     }
+
     @FXML
     protected void quit() {
         Platform.exit();
@@ -79,6 +81,8 @@ public class GameController {
         hasStarted = false;
         text_for_dev.setText("");
         clearGridView();
+        gameService.resetMatrix();
+
     }
 
     private void clearGridView() {
@@ -91,48 +95,52 @@ public class GameController {
         }
     }
 
-    private void unhideBlankNeighbor(int i, int j) {
+    private void unhideBlankNeighbor(int i, int j, String cube_val) {
         ++revealedCards;
 
         boardButtons[i][j].setDisable(true);
         revealCellVal(i, j);
         gameService.unhideCube(i, j);
 
+        if(cube_val.equals(FLAG)) {
+            --wrongMoves; // not a mine for sure
+        }
+
         if(gameService.getCellCubeType(i, j) == cubeType.BLANK) {
 
             if(i >= 1) {
                 if(gameService.isHidden(i - 1, j)) {
-                    unhideBlankNeighbor(i - 1, j); // up
+                    unhideBlankNeighbor(i - 1, j, boardButtons[i - 1][j].getText()); // up
                 }
 
                 if (j >= 1 && gameService.isHidden(i - 1, j - 1)) {
-                    unhideBlankNeighbor(i - 1, j - 1); // top left
+                    unhideBlankNeighbor(i - 1, j - 1, boardButtons[i - 1][j - 1].getText()); // top left
                 }
 
                 if(j < board_size - 1 && gameService.isHidden(i - 1, j + 1)) {
-                    unhideBlankNeighbor(i - 1, j + 1); // top right
+                    unhideBlankNeighbor(i - 1, j + 1, boardButtons[i - 1][j + 1].getText()); // top right
                 }
             }
 
             if(j >= 1 && gameService.isHidden(i, j - 1)) {
-                unhideBlankNeighbor(i, j - 1); // left
+                unhideBlankNeighbor(i, j - 1, boardButtons[i][j - 1].getText()); // left
             }
 
             if(j < board_size - 1 && gameService.isHidden(i, j + 1)) {
-                unhideBlankNeighbor(i, j + 1); // right
+                unhideBlankNeighbor(i, j + 1, boardButtons[i][j + 1].getText()); // right
             }
 
             if(i < board_size - 1) {
                 if(gameService.isHidden(i + 1, j)) {
-                    unhideBlankNeighbor(i + 1, j); //bottom
+                    unhideBlankNeighbor(i + 1, j, boardButtons[i + 1][j].getText()); //bottom
                 }
 
                 if (j >= 1 && gameService.isHidden(i + 1, j - 1)) {
-                    unhideBlankNeighbor(i + 1, j - 1); // bottom left
+                    unhideBlankNeighbor(i + 1, j - 1, boardButtons[i + 1][j - 1].getText()); // bottom left
                 }
 
                 if(j < board_size - 1 && gameService.isHidden(i + 1, j + 1)) {
-                    unhideBlankNeighbor(i + 1, j + 1); // bottom right
+                    unhideBlankNeighbor(i + 1, j + 1, boardButtons[i + 1][j + 1].getText()); // bottom right
                 }
             }
         }
@@ -148,12 +156,10 @@ public class GameController {
         }
 
         if (event.getButton() == MouseButton.PRIMARY) { // left click
-            handlePrimaryClick(i, j);
+            handlePrimaryClick(i, j, cube_val);
         } else if (event.getButton() == MouseButton.SECONDARY) { // right click
             handleSecondaryClick(i, j, cube_val);
         }
-
-        text_for_dev.setText("Clicked cell: i=" + i + " j=" + j);
 
         if(hasWon()) {
             disableBoard();
@@ -162,32 +168,31 @@ public class GameController {
         }
     }
 
-    private void handlePrimaryClick(int i, int j) {
-        if(gameService.getCellCubeType(i, j) == cubeType.BLANK) {
-            unhideBlankNeighbor(i, j);
-        } else {
-            boardButtons[i][j].setDisable(true);
-            revealCellVal(i, j);
-            ++revealedCards;
-        }
-
+    private void handlePrimaryClick(int i, int j, String cube_val) {
         boolean isValidMove = gameService.handleReveal(i, j);
 
         if(!isValidMove) {
             boardButtons[i][j].setStyle("-fx-border-color: red;");
             gameOver();
         }
+
+        if(gameService.getCellCubeType(i, j) == cubeType.BLANK) {
+            unhideBlankNeighbor(i, j, cube_val);
+        } else {
+            boardButtons[i][j].setDisable(true);
+            revealCellVal(i, j);
+            ++revealedCards;
+            if(cube_val.equals(FLAG)) {
+                --wrongMoves; // not a mine for sure
+            }
+        }
     }
 
     private void handleSecondaryClick(int i, int j, String cube_val) {
-        if(!cube_val.equals(FLAG)) { // placing flag
-            setFlag(i, j);
-            gameService.handleFlag(i, j);
-        }
-
         if(cube_val.equals(FLAG)) { // user wants to cancel flag
             removeFlag(i, j);
-            gameService.handleFlag(i, j);
+        } else {
+            setFlag(i, j); // placing flag
         }
     }
 
@@ -198,18 +203,18 @@ public class GameController {
 
     private void setFlag(int i, int j) {
         boardButtons[i][j].setText(FLAG);
-        boolean isMine = gameService.checkFlagValidatyIsMine(i, j);
+        boolean isMine = gameService.checkFlagIsMine(i, j);
 
         if(isMine) {
             ++minesDetected;
         } else {
-            ++wrongMoves;
+            ++wrongMoves; // placing flag for no mine
         }
     }
 
     private void removeFlag(int i, int j) {
         boardButtons[i][j].setText(BLANK);
-        boolean isMine = gameService.checkFlagValidatyIsMine(i, j);
+        boolean isMine = gameService.checkFlagIsMine(i, j);
 
         if(!isMine) {
             --wrongMoves;
@@ -225,8 +230,7 @@ public class GameController {
 
     private void gameOver() {
         disableBoard();
-        // TO - DO
-        text_for_dev.setText("Game Over");
+        text_for_dev.setText("Game Over, What a LOOSER :(");
     }
 
     private void disableBoard(){

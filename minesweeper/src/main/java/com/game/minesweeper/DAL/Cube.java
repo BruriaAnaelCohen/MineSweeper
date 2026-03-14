@@ -16,6 +16,12 @@ public class Cube {
         }
     }
 
+    public void resetCube() {
+        this.isHidden = true;
+        this.type = cubeType.BLANK;
+        this.val = -1;
+    }
+
     public void setMine() {
         this.type = cubeType.MINE;
     }
