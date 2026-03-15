@@ -1,9 +1,7 @@
 # MineSweeper
 The familiar old minesweeper game of windows, for those who remember, I didn't, so I challenged myself to get to know the game and implement my own.
 
-# Minesweeper -- JavaFX Implementation
-
-## Overview
+## Overview - JavaFX Implementation
 
 This project is an implementation of the classic **Minesweeper game**
 built with **JavaFX**.
@@ -77,7 +75,6 @@ Verify installation:
 
     java -version
 
-------------------------------------------------------------------------
 
 ### 2. Download JavaFX SDK
 
@@ -91,14 +88,12 @@ Example:
 
     C:\javafx-sdk
 
-------------------------------------------------------------------------
 
 ### 3. Open the Project
 
 1.  Clone or download the repository.
 2.  Open the project in **IntelliJ IDEA**.
 
-------------------------------------------------------------------------
 
 ### 4. Configure JavaFX
 
