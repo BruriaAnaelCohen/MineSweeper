@@ -14,7 +14,6 @@ moves.
 The project demonstrates **JavaFX UI development and game logic
 implementation in Java**.
 
-------------------------------------------------------------------------
 
 ## Features
 
@@ -29,7 +28,6 @@ implementation in Java**.
 -   Cells reveal numeric values representing the number of neighboring
     mines
 
-------------------------------------------------------------------------
 
 ## Game Flow
 
@@ -43,7 +41,7 @@ implementation in Java**.
 
 For more info about the game visit https://en.wikipedia.org/wiki/Minesweeper_(video_game)
 
-------------------------------------------------------------------------
+
 
 ## Technologies Used
 
@@ -51,7 +49,7 @@ For more info about the game visit https://en.wikipedia.org/wiki/Minesweeper_(vi
 -   **JavaFX**
 -   **IntelliJ IDEA**
 
-------------------------------------------------------------------------
+
 
 ## Requirements
 
@@ -61,7 +59,6 @@ To run this application you need:
 -   **JavaFX SDK**
 -   **IntelliJ IDEA** (recommended for running the project)
 
-------------------------------------------------------------------------
 
 ## Installation
 
@@ -105,7 +102,6 @@ In IntelliJ:
 4.  Choose the **lib folder** inside the JavaFX SDK
 5.  Apply the changes
 
-------------------------------------------------------------------------
 
 ## Running the Application
 
