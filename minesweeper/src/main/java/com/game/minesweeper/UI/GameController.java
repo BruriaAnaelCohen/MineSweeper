@@ -27,7 +27,6 @@ public class GameController {
     private int board_size;
 
     private static final String FLAG = "⚑";
-    private static final String MINE = "💣︎";
     private static final String BLANK = "";
 
     private int wrongMoves = 0;
@@ -78,8 +77,12 @@ public class GameController {
 
     @FXML
     protected void resetGame() {
-        hasStarted = false;
-        text_for_dev.setText("");
+        this.hasStarted = false;
+        this.wrongMoves = 0;
+        this.revealedCards = 0;
+        this.minesDetected = 0;
+        this.text_for_dev.setText("");
+
         clearGridView();
         gameService.resetMatrix();
 
