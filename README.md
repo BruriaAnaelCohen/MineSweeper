@@ -14,6 +14,10 @@ moves.
 The project demonstrates **JavaFX UI development and game logic
 implementation in Java**.
 
+## 📥 Download & Play
+Don't want to deal with the code? Just download the executable: [latest](https://github.com/BruriaAnaelCohen/MineSweeper/releases/tag/v1)
+
+Latest releases: [Releases tab](https://github.com/BruriaAnaelCohen/MineSweeper/releases)
 
 ## Features
 
@@ -112,9 +116,4 @@ The game window will open and display:
 -   Restart button
 -   Minesweeper board
 -   Quit button
-
-## 📥 Download & Play
-Don't want to deal with the code? Just download the executable: [latest](https://github.com/BruriaAnaelCohen/MineSweeper/releases/tag/v1)
-
-Latest releases: [Releases tab](https://github.com/BruriaAnaelCohen/MineSweeper/releases)
 
