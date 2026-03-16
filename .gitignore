@@ -38,4 +38,4 @@ build/
 ### Mac OS ###
 .DS_Store
 
-/minesweeper/src/main/java/com/game/minesweeper/DAL/User.java
+./minesweeper/src/main/java/com/game/minesweeper/DAL/User.java
