@@ -113,3 +113,8 @@ The game window will open and display:
 -   Minesweeper board
 -   Quit button
 
+## 📥 Download & Play
+Don't want to deal with the code? Just download the executable: [latest](https://github.com/BruriaAnaelCohen/MineSweeper/releases/tag/v1)
+
+Latest releases: [Releases tab](https://github.com/BruriaAnaelCohen/MineSweeper/releases)
+
