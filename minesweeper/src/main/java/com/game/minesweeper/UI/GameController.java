@@ -29,8 +29,6 @@ public class GameController {
     private static final String FLAG = "⚑";
     private static final String BLANK = "";
 
-
-
     @FXML
     protected void initialize() {
         this.gameService = new GameService();
@@ -38,6 +36,40 @@ public class GameController {
         this.board_width = gameService.getBoardWidth();
 
         buildBoardVisual();
+    }
+
+    @FXML
+    protected void quit() {
+        Platform.exit();
+    }
+
+    @FXML
+    protected void resetGame() {
+        this.hasStarted = false;
+        this.text_for_dev.setText("");
+
+        clearGridView();
+        gameService.resetGame();
+
+    }
+
+    @FXML
+    protected void handleClick(MouseEvent event, int i, int j) {
+        if (!hasStarted) {
+            hasStarted = true;
+            gameService.startGame(i, j);
+        }
+
+        if (event.getButton() == MouseButton.PRIMARY) { // left click
+            handlePrimaryClick(i, j);
+        } else if (event.getButton() == MouseButton.SECONDARY) { // right click
+            handleSecondaryClick(i, j);
+        }
+
+        if(this.gameService.hasWon()) { //TODO
+            disableBoard();
+            text_for_dev.setText("YOU WON :)");
+        }
     }
 
     private void buildBoardVisual() {
@@ -55,21 +87,6 @@ public class GameController {
                 boardGrid.add(btn, col, row);
             }
         }
-    }
-
-    @FXML
-    protected void quit() {
-        Platform.exit();
-    }
-
-    @FXML
-    protected void resetGame() {
-        this.hasStarted = false;
-        this.text_for_dev.setText("");
-
-        clearGridView();
-        gameService.resetGame();
-
     }
 
     private void clearGridView() {
@@ -91,25 +108,6 @@ public class GameController {
             revealCellVal(i, j);
         }
 
-    }
-
-    @FXML
-    protected void handleClick(MouseEvent event, int i, int j) {
-        if (!hasStarted) {
-            hasStarted = true;
-            gameService.startGame(i, j);
-        }
-
-        if (event.getButton() == MouseButton.PRIMARY) { // left click
-            handlePrimaryClick(i, j);
-        } else if (event.getButton() == MouseButton.SECONDARY) { // right click
-            handleSecondaryClick(i, j);
-        }
-
-        if(this.gameService.hasWon()) { //TODO
-            disableBoard();
-            text_for_dev.setText("YOU WON :)");
-        }
     }
 
     private void handlePrimaryClick(int i, int j) {

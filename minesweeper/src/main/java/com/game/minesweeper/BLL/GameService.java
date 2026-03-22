@@ -28,10 +28,6 @@ public class GameService {
         buildMatrix();
     }
 
-    public boolean isBlank(int i, int j) {
-        return cubesMat[i][j].getType() == cubeType.BLANK;
-    }
-
     public int getBoardHeight() {
         return this.board_height;
     }
@@ -143,10 +139,6 @@ public class GameService {
         return cube.getType() != cubeType.MINE;
     }
 
-    public boolean isHidden(int i, int j) {
-        return cubesMat[i][j].isHidden();
-    }
-
     public String getCellVal(int i, int j) {
         Cube cube = cubesMat[i][j];
         cubeType type = cube.getType();
@@ -202,6 +194,14 @@ public class GameService {
         }
     }
 
+    public boolean isBlank(int i, int j) {
+        return cubesMat[i][j].getType() == cubeType.BLANK;
+    }
+
+    public boolean isHidden(int i, int j) {
+        return cubesMat[i][j].isHidden();
+    }
+
     public boolean isFlagged(int i, int j) {
         return cubesMat[i][j].isFlagged();
     }
@@ -235,6 +235,4 @@ public class GameService {
             }
         }
     }
-
-
 }
