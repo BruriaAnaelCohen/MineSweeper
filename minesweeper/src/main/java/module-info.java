@@ -1,4 +1,4 @@
-module com.example.minesweeper {
+module com.game.minesweeper{
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -6,6 +6,7 @@ module com.example.minesweeper {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires annotations;
+    requires static lombok;
 
     opens com.game.minesweeper to javafx.fxml;
     exports com.game.minesweeper;
